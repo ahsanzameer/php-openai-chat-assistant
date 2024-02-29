@@ -26,5 +26,19 @@ $chat = new ChatAssistant($key);
 //asst_JwhW3OZKuYUgFC7mCugHbkTo
 //pre($chat->deleteAssistantFiles('asst_JwhW3OZKuYUgFC7mCugHbkTo','file-AAodcnLvHzbw3A07z1MnZQcY'));
 
+//thread_FY4lwIN6fREGLWD8Li9BpzuB
+//pre($chat->createThread());
+//pre($chat->getThread('thread_FY4lwIN6fREGLWD8Li9BpzuB'));
+//pre($chat->modifyThread('thread_FY4lwIN6fREGLWD8Li9BpzuB',['metadata' =>["modified"=>"true","user"=>"ahsan-123"]]));
+//pre($chat->deleteThread('thread_FY4lwIN6fREGLWD8Li9BpzuB'));
+
+//pre($chat->createMessage('thread_B8ynqR6jQY0603NoB77G6W7L',["role"=>"user","content"=>"What is chat genie?"]));
+
+//pre($chat->listMessages('thread_B8ynqR6jQY0603NoB77G6W7L'));
+//pre($chat->getMessagesFiles('thread_B8ynqR6jQY0603NoB77G6W7L','msg_GpCDdnRv4I5PS9foZgkVyIeV'));
+//pre($chat->getMessage('thread_B8ynqR6jQY0603NoB77G6W7L','msg_GpCDdnRv4I5PS9foZgkVyIeV'));
+//pre($chat->getSingleMessageFile('thread_B8ynqR6jQY0603NoB77G6W7L','msg_GpCDdnRv4I5PS9foZgkVyIeV','file-AAodcnLvHzbw3A07z1MnZQcY'));
+pre($chat->modifyMessage('thread_B8ynqR6jQY0603NoB77G6W7L','msg_GpCDdnRv4I5PS9foZgkVyIeV',['metadata'=>["modified"=>"true","user"=>"ancsd"]]));
+
 
 

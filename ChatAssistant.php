@@ -110,11 +110,98 @@ class ChatAssistant{
         return $getResponse;
     }
 
-    public function createThread(){
-        
+    public function createThread():array{
+        $url = "threads";
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'POST');
+        return $getResponse;
     }
 
- 
+    public function getThread(string $threadId):array{
+        $url = 'threads/'.$threadId;
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function modifyThread(string $threadId,array $data):array{
+        $url = "threads/".$threadId;
+        
+        //will come and add if $data['metadata']
+        $getResponse = $this->curlRequest($url,$data,'POST');
+        return $getResponse;
+    }
+
+    public function deleteThread(string $threadId):array{
+        $url = "threads/".$threadId;
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'DELETE');
+        return $getResponse;
+    }
+
+    public function createMessage(string $threadId,$data):array{
+        $url = "threads/".$threadId."/messages";
+        $getResponse = $this->curlRequest($url,$data,'POST');
+        return $getResponse;
+    }
+
+    public function listMessages(string $threadId,string $order="desc", int $limit=20,string $after=null,string $before=null):array{
+        $url = 'threads/'.$threadId.'/messages';
+
+        $data = [
+            "order" => $order,
+            "limit" => $limit,
+        ];
+
+        if(!is_null($after)){
+            $data['after'] = $after;
+        }
+
+        if(!is_null($before)){
+            $data['before'] = $before;
+        }
+        
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function getMessagesFiles(string $threadId,string $msgId):array{
+        $url = 'threads/'.$threadId.'/messages/'.$msgId.'/files';
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function getMessage(string $threadId,string $msgId):array{
+        $url = 'threads/'.$threadId.'/messages/'.$msgId;
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function getSingleMessageFile(string $threadId,string $msgId, string $fileId):array{
+        $url = 'threads/'.$threadId.'/messages/'.$msgId.'/files/'.$fileId;
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function modifyMessage(string $threadId,string $msgId,$data):array{
+        $url = 'threads/'.$threadId.'/messages/'.$msgId;
+        $getResponse = $this->curlRequest($url,$data,'POST');
+        return $getResponse;
+    }
+
+    public function run(string $threadId,array $data):array{
+        $url = 'threads/'.$threadId.'/runs /';
+        if(!isset($data['assistant_id'])){
+            throw new Exception('No Assistant Id found');
+        }
+        $getResponse = $this->curlRequest($url,$data,'POST');
+        return $getResponse;
+    }
+
+
     public function uploadFile(array $filePath){
         $getStatus = $this->curlFileUpload($filePath);
         return $getStatus;
