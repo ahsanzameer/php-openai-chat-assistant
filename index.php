@@ -19,6 +19,7 @@ $chat = new ChatAssistant($key);
 //pre($chat->createAssistant());
 
 //pre($chat->listAssistants());
+$assistantId = 'asst_ovk1Tl3ylTiAjV4ZEV4o22LG';
 //pre($chat->getAssistantFiles('asst_7DIBT7Fb57rayZ32z6D3D8HB'));
 //pre($chat->getAssistant('asst_7DIBT7Fb57rayZ32z6D3D8HB'));
 //pre($chat->modifyAssistant('asst_7DIBT7Fb57rayZ32z6D3D8HB',['name' =>'ahsan modify test']));
@@ -38,7 +39,29 @@ $chat = new ChatAssistant($key);
 //pre($chat->getMessagesFiles('thread_B8ynqR6jQY0603NoB77G6W7L','msg_GpCDdnRv4I5PS9foZgkVyIeV'));
 //pre($chat->getMessage('thread_B8ynqR6jQY0603NoB77G6W7L','msg_GpCDdnRv4I5PS9foZgkVyIeV'));
 //pre($chat->getSingleMessageFile('thread_B8ynqR6jQY0603NoB77G6W7L','msg_GpCDdnRv4I5PS9foZgkVyIeV','file-AAodcnLvHzbw3A07z1MnZQcY'));
-pre($chat->modifyMessage('thread_B8ynqR6jQY0603NoB77G6W7L','msg_GpCDdnRv4I5PS9foZgkVyIeV',['metadata'=>["modified"=>"true","user"=>"ancsd"]]));
+//pre($chat->modifyMessage('thread_B8ynqR6jQY0603NoB77G6W7L','msg_GpCDdnRv4I5PS9foZgkVyIeV',['metadata'=>["modified"=>"true","user"=>"ancsd"]]));
 
+//pre($chat->run('thread_B8ynqR6jQY0603NoB77G6W7L',["assistant_id"=>$assistantId]));
+/*pre($chat->createThreadAndRun(
+    [
+        'assistant_id'=>$assistantId,
+        'thread' => [
+            "messages" =>[[
+                    "role" =>"user",
+                    "content" => "What is chat genie",
+                ]
+            ]
+        ]
+    ]    
+));
+*/
 
+//pre($chat->listRuns('thread_B8ynqR6jQY0603NoB77G6W7L'));
+//pre($chat->retrieveRun('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF'));
+//pre($chat->listRunSteps('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF'));
+//pre($chat->retrieveRunStep('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF','step_30234234WER'));
+//pre($chat->modifyRun('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF',['metadata' =>["modified"=>"true","user"=>"ahsan-123"]]));
+//pre($chat->submitToolOutputToRun('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF'));
+
+pre($chat->cancelRun('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF'));
 

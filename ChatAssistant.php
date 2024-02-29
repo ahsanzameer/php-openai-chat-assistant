@@ -6,9 +6,9 @@ class ChatAssistant{
     const ASSISTANT_VERSION = "assistants=v1";
 
     private $apiKey = '';
-    private $chatModel='gpt-3.5-turbo';
+    private $chatModel='gpt-4';
     private $instructions ='You are a customer support chatbot. Use your knowledge base to best respond to customer queries.';
-    private $tools = [["type" =>  "retrieval"]];
+    private $tools = [["type" =>  "gpt-4"]];
     private $threadID = '';
     
 
@@ -89,9 +89,9 @@ class ChatAssistant{
         return $getResponse;
     }
 
-    //https://platform.openai.com/docs/api-reference/assistants/modifyAssistant
     public function modifyAssistant(string $assistantId, array $data):array{
         $url = "assistants/".$assistantId;
+
         $getResponse = $this->curlRequest($url,$data,'POST');
         return $getResponse;
     }
@@ -127,7 +127,10 @@ class ChatAssistant{
     public function modifyThread(string $threadId,array $data):array{
         $url = "threads/".$threadId;
         
-        //will come and add if $data['metadata']
+        if(!isset($data['metadata'])){
+            throw new Exception('No metadata found');
+        }
+
         $getResponse = $this->curlRequest($url,$data,'POST');
         return $getResponse;
     }
@@ -188,19 +191,93 @@ class ChatAssistant{
 
     public function modifyMessage(string $threadId,string $msgId,$data):array{
         $url = 'threads/'.$threadId.'/messages/'.$msgId;
+        
+        if(!isset($data['metadata'])){
+            throw new Exception('No metadata found');
+        }
+
         $getResponse = $this->curlRequest($url,$data,'POST');
         return $getResponse;
     }
 
     public function run(string $threadId,array $data):array{
-        $url = 'threads/'.$threadId.'/runs /';
+        $url = 'threads/'.$threadId.'/runs';
+
         if(!isset($data['assistant_id'])){
             throw new Exception('No Assistant Id found');
         }
+
         $getResponse = $this->curlRequest($url,$data,'POST');
         return $getResponse;
     }
 
+    public function createThreadAndRun(array $data):array{
+        $url = 'threads/runs';
+
+        if(!isset($data['assistant_id'])){
+            throw new Exception('No assistant id  found');
+        }
+
+        if(!isset($data['thread'])){
+            throw new Exception('No thread index found');
+        }
+
+        $getResponse = $this->curlRequest($url,$data,'POST');
+        return $getResponse;
+    }
+
+    public function listRuns(string $threadId):array{
+        $url = 'threads/'.$threadId.'/runs';
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function listRunSteps(string $threadId, string $rundId):array{
+        $url = 'threads/'.$threadId.'/runs/'.$rundId.'/steps';
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function retrieveRun(string $threadId, string $rundId):array{
+        $url = 'threads/'.$threadId.'/runs/'.$rundId;
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function retrieveRunStep(string $threadId, string $rundId, string $stepId):array{
+        $url = 'threads/'.$threadId.'/runs/'.$rundId.'/steps/'.$stepId;
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function modifyRun(string $threadId, string $rundId,array $data):array{
+        $url = 'threads/'.$threadId.'/runs/'.$rundId;
+
+        if(!isset($data['metadata'])){
+            throw new Exception('No metadata found');
+        }
+
+        $getResponse = $this->curlRequest($url,$data,'POST');
+        return $getResponse;
+    }
+   
+    public function submitToolOutputToRun(string $threadId, string $rundId):array{
+        $url = 'threads/'.$threadId.'/runs/'.$rundId.'/submit_tool_outputs';
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'POST');
+        return $getResponse;
+    }
+
+    public function cancelRun(string $threadId, string $rundId):array{
+        $url = 'threads/'.$threadId.'/runs/'.$rundId.'/cancel';
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'POST');
+        return $getResponse;
+    }
 
     public function uploadFile(array $filePath){
         $getStatus = $this->curlFileUpload($filePath);
