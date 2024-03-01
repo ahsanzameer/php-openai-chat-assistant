@@ -11,6 +11,67 @@ $pdf = [realpath('pdfs/ChatGenie-Plugin.pdf')];
 
 $chat = new ChatAssistant($key);
 
+$assistantId = 'asst_tYLTx5OXMEoNMPVUAybJxoG5';
+
+//1st step
+//$createThread = $chat->createThread();
+//pre($createThread);
+$threadId = 'thread_u1vS9A2PpmBQP6u73MLUoAWt';
+
+//2nd step
+//$message = ["role"=>"user","content"=>"Hi, How are you?"];
+//$createMessage = $chat->createMessage($threadId,$message);
+//pre($createMessage);
+
+//$messageId = 'msg_sah82L1SJmlwztZGILZwqxSm';
+
+//3rd step
+//$runData = ['assistant_id'=>$assistantId];
+//$run = $chat->run($threadId,$runData);
+//pre($run);
+
+//$runId = 'run_Ug4NVqrFJUPCghIOFju1JdmG';
+
+//4th step
+//$runStatus = $chat->retrieveRun($threadId,$runId);
+//pre($runStatus);
+//if [status] => completed
+
+//
+//$getMsges = $chat->listMessages($threadId);
+//pre($getMsges);
+
+
+
+$message = ["role"=>"user","content"=>"What is chatgenie and what the plugin requirement show in bullets?"];
+//$createMessage = $chat->createMessage($threadId,$message);
+//pre($createMessage);
+$msg2 = "msg_LVcHim0sniVyb0OulCYjGR7n";
+
+//$runData = ['assistant_id'=>$assistantId];
+//$run = $chat->run($threadId,$runData);
+//pre($run);
+
+//$listRuns = $chat->listRuns($threadId);
+//pre($listRuns);
+
+//$runId = 'run_e3CAZgFDDEEKWJf67KNCpNbn';
+//$runStatus = $chat->retrieveRun($threadId,$runId);
+//pre($runStatus);
+
+//$getMsges = $chat->listMessages($threadId);
+//pre($getMsges);
+
+//$attachFileToAssistant = $chat->createAssistantFile($assistantId,['file_id'=>"file-uE5AEjcLLt9J5L98kBK2PPvZ"]);
+//pre($attachFileToAssistant);
+
+//$getAttachment = $chat->getAssistantFiles($assistantId);
+//pre($getAttachment);
+
+//$getAssistant = $chat->getAssistant($assistantId);
+//pre($getAssistant);
+
+
 //file-AAodcnLvHzbw3A07z1MnZQcY
 //pre($chat->uploadFile($pdf));
 
@@ -19,7 +80,9 @@ $chat = new ChatAssistant($key);
 //pre($chat->createAssistant());
 
 //pre($chat->listAssistants());
-$assistantId = 'asst_ovk1Tl3ylTiAjV4ZEV4o22LG';
+//$assistantId = 'asst_ovk1Tl3ylTiAjV4ZEV4o22LG';
+
+
 //pre($chat->getAssistantFiles('asst_7DIBT7Fb57rayZ32z6D3D8HB'));
 //pre($chat->getAssistant('asst_7DIBT7Fb57rayZ32z6D3D8HB'));
 //pre($chat->modifyAssistant('asst_7DIBT7Fb57rayZ32z6D3D8HB',['name' =>'ahsan modify test']));
@@ -63,5 +126,5 @@ $assistantId = 'asst_ovk1Tl3ylTiAjV4ZEV4o22LG';
 //pre($chat->modifyRun('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF',['metadata' =>["modified"=>"true","user"=>"ahsan-123"]]));
 //pre($chat->submitToolOutputToRun('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF'));
 
-pre($chat->cancelRun('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF'));
+//pre($chat->cancelRun('thread_B8ynqR6jQY0603NoB77G6W7L','run_0rHp3kYrRmYix1AYKa00kxCF'));
 

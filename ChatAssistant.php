@@ -1,15 +1,20 @@
 
 <?php
-
+ /**
+  * @author Ahsan Zameer
+  * @author Ahsan Zameer <ahsn_zmeer@hotmail.com>
+  * @license GPL 
+  */
+  
 class ChatAssistant{
     const BASE_URL = "https://api.openai.com/v1/";
     const ASSISTANT_VERSION = "assistants=v1";
 
-    private $apiKey = '';
-    private $chatModel='gpt-4';
-    private $instructions ='You are a customer support chatbot. Use your knowledge base to best respond to customer queries.';
-    private $tools = [["type" =>  "gpt-4"]];
-    private $threadID = '';
+    private string $apiKey = '';
+    private string $chatModel='gpt-4';
+    private string $instructions ='You are a customer support chatbot. Use your knowledge base to best respond to customer queries.';
+    private array $tools = [["type" =>  "gpt-4-turbo-preview"]];
+    private string $threadID = '';
     
 
     public function __construct(string $key) {
@@ -75,13 +80,6 @@ class ChatAssistant{
         return $getResponse;
     }
 
-    public function getAssistantFiles(string $assistantId):array{
-        $url = 'assistants/'.$assistantId.'/files';
-        $data=[];
-        $getResponse = $this->curlRequest($url,$data,'GET');
-        return $getResponse;
-    }
-
     public function getAssistant(string $assistantId):array{
         $url = 'assistants/'.$assistantId;
         $data=[];
@@ -100,6 +98,24 @@ class ChatAssistant{
         $url = "assistants/".$assistantId;
         $data=[];
         $getResponse = $this->curlRequest($url,$data,'DELETE');
+        return $getResponse;
+    }
+
+    public function getAssistantFiles(string $assistantId):array{
+        $url = 'assistants/'.$assistantId.'/files';
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
+    }
+
+    public function createAssistantFile(string $assistantId,$data):array{
+        $url = "assistants/".$assistantId."/files";
+
+        if(!isset($data['file_id'])){
+            throw new Exception('No file id found');
+        }
+
+        $getResponse = $this->curlRequest($url,$data,'POST');
         return $getResponse;
     }
 
@@ -277,6 +293,12 @@ class ChatAssistant{
         $data=[];
         $getResponse = $this->curlRequest($url,$data,'POST');
         return $getResponse;
+    }
+
+    
+    public function verifyApiKey():string{
+        $listAssistants = $this->listAssistants();
+        return $listAssistants['error']['code']??'valid_api_key';
     }
 
     public function uploadFile(array $filePath){
