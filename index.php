@@ -1,5 +1,6 @@
 <?php
 require_once('ChatAssistant.php');
+
 function pre($array){
     echo "<pre>";
     print_r($array);
@@ -7,30 +8,42 @@ function pre($array){
 }
 
 $key = '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';
-$pdf = [realpath('pdfs/ChatGenie-Plugin.pdf')];
+//$pdf = [realpath('pdfs/ChatGenie-Plugin.pdf'),realpath('pdfs/web-leaderboard.pdf'),realpath('pdfs/bible-ui.pdf')];
+$pdf = 'pdfs/ChatGenie-Plugin.pdf';
+$chat = new AhsanZameer\ChatAssistant($key);
 
-$chat = new ChatAssistant($key);
+//pre($chat->uploadFile($pdf));
+//file-8hGttRPifER2aloGwZ3dQEUx
+//$file = $chat->getFile('file-8hGttRPifER2aloGwZ3dQEUx');
+//pre($file);
+//file-bkPRBkd1G8XG9dHSPpk9Fyue
+//$delFile = $chat->deleteFile('file-bkPRBkd1G8XG9dHSPpk9Fyue');
+//pre($delFile);
+//exit();
+$assistantId = 'ass34t_tYLTx5OXMEoNMPVUAybJxoG5';
+$createThread = $chat->getAssistant($assistantId);
 
-$assistantId = 'asst_tYLTx5OXMEoNMPVUAybJxoG5';
+pre($createThread);
+exit();
 
 //1st step
 //$createThread = $chat->createThread();
 //pre($createThread);
-$threadId = 'thread_u1vS9A2PpmBQP6u73MLUoAWt';
+$threadId = 'thread_Q5EMY22cySkKbFp2Sn69A7KB';
 
 //2nd step
-//$message = ["role"=>"user","content"=>"Hi, How are you?"];
+//$message = ["role"=>"user","content"=>"Hi, I want to know about the AI Models"];
 //$createMessage = $chat->createMessage($threadId,$message);
 //pre($createMessage);
 
-//$messageId = 'msg_sah82L1SJmlwztZGILZwqxSm';
+$messageId = 'msg_KI0tu1NGlrfebXku50muDWrb';
 
 //3rd step
 //$runData = ['assistant_id'=>$assistantId];
 //$run = $chat->run($threadId,$runData);
 //pre($run);
 
-//$runId = 'run_Ug4NVqrFJUPCghIOFju1JdmG';
+$runId = 'run_QL7yUQAzPd6z4fEZIIJXUKWh';
 
 //4th step
 //$runStatus = $chat->retrieveRun($threadId,$runId);
@@ -38,8 +51,8 @@ $threadId = 'thread_u1vS9A2PpmBQP6u73MLUoAWt';
 //if [status] => completed
 
 //
-//$getMsges = $chat->listMessages($threadId);
-//pre($getMsges);
+$getMsges = $chat->listMessages($threadId);
+pre($getMsges);
 
 
 

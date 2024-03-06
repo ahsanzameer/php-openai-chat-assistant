@@ -1,6 +1,6 @@
-
 <?php
- /**
+namespace AhsanZameer;
+/**
   * @author Ahsan Zameer
   * @author Ahsan Zameer <ahsn_zmeer@hotmail.com>
   * @license GPL 
@@ -11,9 +11,9 @@ class ChatAssistant{
     const ASSISTANT_VERSION = "assistants=v1";
 
     private string $apiKey = '';
-    private string $chatModel='gpt-4';
+    private string $chatModel='gpt-4-turbo-preview';
     private string $instructions ='You are a customer support chatbot. Use your knowledge base to best respond to customer queries.';
-    private array $tools = [["type" =>  "gpt-4-turbo-preview"]];
+    private array $tools = [["type" =>  "retrieval"]];
     private string $threadID = '';
     
 
@@ -45,9 +45,9 @@ class ChatAssistant{
         return $this->tools;
     }
 
-    public function createAssistant(array $fileIds=null):array{
+    public function createAssistant(string $assistantName, array $fileIds=null):array{
         $data = [
-            'name' => 'Chat Genie',
+            'name' => $assistantName,
             'instructions'=>$this->instructions,
             "tools"=>$this->tools,
             "model"=>$this->chatModel,
@@ -301,9 +301,23 @@ class ChatAssistant{
         return $listAssistants['error']['code']??'valid_api_key';
     }
 
-    public function uploadFile(array $filePath){
+    public function uploadFile(string $filePath):array{
         $getStatus = $this->curlFileUpload($filePath);
         return $getStatus;
+    }
+
+    public function deleteFile(string $fileId):array{
+        $url = "files/".$fileId;
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'DELETE');
+        return $getResponse;
+    }
+
+    public function getFile(string $fileId):array{
+        $url = "files/".$fileId;
+        $data=[];
+        $getResponse = $this->curlRequest($url,$data,'GET');
+        return $getResponse;
     }
 
     public function curlRequest(string $action, array $data=[],string $type='GET'):array{
@@ -343,7 +357,7 @@ class ChatAssistant{
     }
 
 
-    public function curlFileUpload(array $filePath){
+    public function curlFileUpload(string $filePath){
         $url = self::BASE_URL."files";
 
         // Initialize cURL
@@ -356,29 +370,16 @@ class ChatAssistant{
             "Content-Type: multipart/form-data",
         );
 
-        //pre($headers);
-        //exit();
-
         // Set cURL options
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         //curl_setopt($curl, CURLOPT_POST, true); 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         
-        
         curl_setopt($curl, CURLOPT_POSTFIELDS, array(
             'purpose' => "assistants", // Specify the purpose
-            'file' => new CURLFile($filePath[0]) // Specify the file parameter
+            'file' => new CURLFile($filePath) // Specify the file parameter
         ));
         
-
-        //$post_fields = array();
-        //foreach ($filePath as $index => $file_path) {
-            //$post_fields["file$index"] = new CURLFile($file_path,'application/pdf');
-        //    $post_fields[$index]["file"] = new CURLFile($file_path);
-        //    $post_fields[$index]["purpose"] = "assistants";
-       // }
-
-
         $response = curl_exec($curl);
 
         if(curl_errno($curl)) {
@@ -387,6 +388,6 @@ class ChatAssistant{
 
         curl_close($curl);
 
-        return $response;
+        return json_decode($response,true);
     }
 }
