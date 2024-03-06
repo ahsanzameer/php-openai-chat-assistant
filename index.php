@@ -1,6 +1,6 @@
 <?php
 require_once('ChatAssistant.php');
-//test
+//tes
 function pre($array){
     echo "<pre>";
     print_r($array);
