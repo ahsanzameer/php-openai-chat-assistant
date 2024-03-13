@@ -1,10 +1,5 @@
 <?php
 namespace AhsanZameer;
-/**
-  * @author Ahsan Zameer
-  * @author Ahsan Zameer <ahsn_zmeer@hotmail.com>
-  * @license GPL 
-  */
   
 class ChatAssistant{
     const BASE_URL = "https://api.openai.com/v1/";
@@ -12,7 +7,7 @@ class ChatAssistant{
 
     private string $apiKey = '';
     private string $chatModel='gpt-4-turbo-preview';
-    private string $instructions ='You are a customer support chatbot. Use your knowledge base to best respond to customer queries.';
+    private string $instructions ='You are a very good customer support chatbot. Respond politely for salutation messages and use your knowledge base to best respond to customer queries.';
     private array $tools = [["type" =>  "retrieval"]];
     private string $threadID = '';
     
@@ -631,7 +626,7 @@ class ChatAssistant{
         
         curl_setopt($curl, CURLOPT_POSTFIELDS, array(
             'purpose' => "assistants", // Specify the purpose
-            'file' => new CURLFile($filePath) // Specify the file parameter
+            'file' => new \CURLFile($filePath) // Specify the file parameter
         ));
         
         $response = curl_exec($curl);

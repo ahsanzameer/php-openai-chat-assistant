@@ -1,0 +1,22 @@
+{
+    "name": "ahsanzameer/php-openai-chat-assistant",
+    "type": "library",
+    "description": "OpenAI Chat Assistant Class for PHP",
+    "keywords": ["openai","chat assistant","conversation","library"],
+    "homepage": "https://github.com/ahsanzameer/php-openai-chat-assistant",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ahsan Zameer",
+            "email": "ahsn_zmeer@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AhsanZameer\\": "src/"
+        }
+    }
+}
