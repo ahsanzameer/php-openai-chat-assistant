@@ -5,6 +5,7 @@
     "keywords": ["openai","chat assistant","conversation","library"],
     "homepage": "https://github.com/ahsanzameer/php-openai-chat-assistant",
     "license": "MIT",
+	"version": "1.0",
     "authors": [
         {
             "name": "Ahsan Zameer",
